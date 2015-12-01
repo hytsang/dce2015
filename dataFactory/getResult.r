@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("C:/Users/KY/Documents/RProjects/dce2015")
+setwd("C:/Users/KY/Documents/GitHub/dce2015/dataFactory")
 
 library(XML)
 u<-"http://www.elections.gov.hk/dc2015/eng/results_hk.html"
@@ -15,7 +15,7 @@ tb[narows, 1]<-NA
 names(tb)<-c("ConstituencyCode"
 	, "Constituency"
 	, "CandidateCode"
-	, "Candidate"
+	, "CandidateAlias"
 	, "Votes"
 )
 library(zoo)
@@ -25,6 +25,8 @@ tb<-transform(tb
 	, elected=grepl("\\*",Votes)|Uncontested
 	, VotesN=ifelse(Uncontested, 0, Votes)
 	, Year=2015
+	, Key=paste(ConstituencyCode, CandidateCode, sep="_")
+	, Candidate=gsub("\\(.*\\)","",CandidateAlias)
 )
 tb<-transform(tb, VotesN=as.numeric(gsub("\\*|,","", VotesN)))
 

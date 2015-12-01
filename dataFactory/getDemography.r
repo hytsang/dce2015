@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("C:/Users/KY/Documents/RProjects/dce2015")
+setwd("C:/Users/KY/Documents/GitHub/dce2015/dataFactory")
 
 districts<-readLines("Districts.txt")
 
@@ -26,12 +26,10 @@ for (district in districts)
 		, "Remarks"
 	)
 	tb<-subset(tb, ConstituencyCode!="")
-	tb<-transform(tb, Candidate=toupper( paste0( gsub("-"," ",Nominate)
-				, ifelse(NominateAlias=="","",paste0("(",NominateAlias,")"))
-			)
-		)
+	tb<-transform(tb, Candidate=toupper( gsub("-"," ",Nominate)	)
 		, Constituency=toupper(Constituency)
 	)
+	tb<-
 	
 	tbs<-rbind(tbs, tb)
 	cat(district, " COMPLETED.\n")
